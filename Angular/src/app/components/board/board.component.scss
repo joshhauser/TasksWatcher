@@ -1,0 +1,25 @@
+.column{
+    margin-left: auto;
+    margin-right: auto;
+    width: 20%;
+    margin-top: 5%;
+    overflow: hidden;
+    margin-bottom: 5%;
+
+    mat-card-title{
+        font-size: 12pt;
+    }
+}
+
+.task{
+    margin-top: 6%;
+    color: black;
+    background-color: white;
+}
+
+
+  
+.cdk-drag-preview {
+    box-sizing: border-box;
+    margin-top: 0;
+}

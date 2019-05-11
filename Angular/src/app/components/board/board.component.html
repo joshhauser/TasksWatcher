@@ -1,0 +1,29 @@
+<div fxLayout="row" cdkDropListGroup>
+  <!-- To do-->
+  <mat-card class="example-list" cdkDropList [cdkDropListData]="tab" (cdkDropListDropped)="drop($event)" class="column">
+    <mat-card-title>To do</mat-card-title>
+    <mat-divider></mat-divider>
+    <mat-card class="task" *ngFor="let d of tab" cdkDrag>{{d}}</mat-card>
+  </mat-card>
+
+  <!-- In progres -->
+  <mat-card class="example-list" cdkDropList [cdkDropListData]="tab2" (cdkDropListDropped)="drop($event)" class="column">
+    <mat-card-title>In progress</mat-card-title>
+    <mat-divider></mat-divider>    
+    <mat-card class="task" *ngFor="let d of tab2" cdkDrag>{{d}}</mat-card>
+  </mat-card>
+
+  <!-- Done -->
+  <mat-card class="example-list" cdkDropList [cdkDropListData]="tab" (cdkDropListDropped)="drop($event)" class="column">
+    <mat-card-title>Done</mat-card-title>
+    <mat-divider></mat-divider>
+    <mat-card class="task" *ngFor="let d of tab" cdkDrag>{{d}}</mat-card>
+  </mat-card>
+
+  <!-- In review -->
+  <mat-card class="example-list" cdkDropList [cdkDropListData]="tab2" (cdkDropListDropped)="drop($event)" class="column">
+    <mat-card-title>In review</mat-card-title>
+    <mat-divider></mat-divider>    
+    <mat-card class="task" *ngFor="let d of tab2" cdkDrag>{{d}}</mat-card>
+  </mat-card>
+</div>
