@@ -3,8 +3,9 @@
     margin-right: auto;
     width: 20%;
     margin-top: 5%;
-    overflow: hidden;
     margin-bottom: 5%;
+    max-height: 70vh;
+    overflow-y: scroll;
 
     mat-card-title{
         font-size: 12pt;
@@ -17,9 +18,13 @@
     background-color: white;
 }
 
-
-  
 .cdk-drag-preview {
     box-sizing: border-box;
     margin-top: 0;
+}
+
+@media(max-width: 1000px){
+    .column{
+        width: 70%;
+    }
 }
