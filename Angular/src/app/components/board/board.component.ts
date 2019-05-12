@@ -16,12 +16,12 @@ export class BoardComponent implements OnInit {
 
   constructor(private tasksService: TasksService) { }
 
-  ngOnInit() {
+  ngOnInit(){
     this.getTasks();
   }
 
   getTasks(){
-    this.tasksService.Tasks.subscribe(res => this.tasks = res);
+    this.tasksService.getTasks().subscribe(res => this.tasks = res);
     this.tasks.sort();
   }
 

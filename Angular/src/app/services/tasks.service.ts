@@ -23,7 +23,7 @@ export class TasksService {
     return this.http.post(this.baseUrl + 'INSERT_TASK.php', { data : task}).toPromise();
 
   }
-/*
+
   getTasks(): Observable<any[]>{
     return this.http.get(this.baseUrl + 'SELECT_TASKS.php').pipe(
       map((res) => {
@@ -34,13 +34,8 @@ export class TasksService {
       })
     );
     
-  }*/
-
-  getTasks(){
-    return this.http.get(this.baseUrl + 'SELECT_TASKS.php').toPromise().then(
-      (res) => this.Tasks.next(res)
-    );
   }
+
 
   deleteTask(t: any){
     this.http.delete(this.baseUrl + 'DELETE_TASK.php?task=' + t).toPromise();
