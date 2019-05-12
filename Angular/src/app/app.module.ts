@@ -24,6 +24,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     BoardComponent
   ],
   imports: [
+    HttpClientModule,
     BrowserModule,
     AppRoutingModule,
     MatIconModule,
