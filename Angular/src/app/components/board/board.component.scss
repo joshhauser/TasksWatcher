@@ -4,7 +4,7 @@
     width: 20%;
     margin-top: 5%;
     margin-bottom: 5%;
-    max-height: 75vh;
+    max-height: 80vh;
 
     mat-card-title{
         font-size: 12pt;
@@ -13,8 +13,8 @@
 
 .scroll{
     overflow-y: auto;
-    max-height: 65vh;
-    margin-top: 5%;
+    height: 70vh;
+    margin-top: 2.5%;
 
     mat-card{
         width: 85%;
@@ -26,19 +26,17 @@
     margin-left: 5%;
 }
 
-.form {
-    display: flex;
-    flex-direction: column;
-    min-width: 150px;
-    max-width: 500px;
-    width: 100%;
-    margin-top: 2%;
- }
 
 .task{
     margin-top: 6%;
     color: black;
     background-color: white;
+    font-size: 11pt;
+}
+
+.addTask{
+    margin-top: 5%;
+    margin-left: 1%;
 }
 
 .sep{
@@ -57,7 +55,8 @@
 
     .scroll{
         margin-top: 3%;
-    
+        height: 60vh;
+        
         mat-card{
             width: 90%;
             margin-left: 1%;

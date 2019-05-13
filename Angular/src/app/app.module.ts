@@ -5,7 +5,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { BoardComponent } from './components/board/board.component';
+import { BoardComponent, CreateTask } from './components/board/board.component';
 
 
 /* Material modules & animations */
@@ -16,12 +16,14 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatListModule } from '@angular/material/list';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { DragDropModule } from '@angular/cdk/drag-drop'; 
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { MatDialogModule } from '@angular/material/dialog'; 
 
 @NgModule({
   declarations: [
     AppComponent,
-    BoardComponent
+    BoardComponent,
+    CreateTask
   ],
   imports: [
     HttpClientModule,
@@ -35,9 +37,11 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     MatInputModule,
     MatButtonModule,
     FlexLayoutModule,
-    DragDropModule
+    DragDropModule,
+    MatDialogModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [CreateTask]
 })
 export class AppModule { }

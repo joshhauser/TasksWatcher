@@ -2,16 +2,17 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Observable, BehaviorSubject } from 'rxjs';
+import { Task } from '../model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TasksService {
 
-  Tasks = new BehaviorSubject<any>(null);
+  Tasks = new BehaviorSubject<Task[]>(null);
 
   baseUrl = 'http://localhost/kanban/';
-  private tasks = [];
+  private tasks: Task[] = [];
 
   constructor(private http: HttpClient) { }
 
@@ -25,11 +26,9 @@ export class TasksService {
   }
 
   getTasks(): Observable<any[]>{
-    return this.http.get(this.baseUrl + 'SELECT_TASKS.php').pipe(
+    return this.http.get<Task>(this.baseUrl + 'SELECT_TASKS.php').pipe(
       map((res) => {
         this.tasks = res['data'];
-        console.log("tasks: " + this.tasks);
-        console.log("res: "  + res);
         return this.tasks;
       })
     );

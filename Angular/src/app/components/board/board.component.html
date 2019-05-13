@@ -1,20 +1,13 @@
 <div fxLayout="row" fxLayout.lt-md="column" cdkDropListGroup>
   <!-- To do-->
-  <mat-card cdkDropList [cdkDropListData]="tab" (cdkDropListDropped)="drop($event)" class="column">
+  <mat-card cdkDropList [cdkDropListData]="tasks" (cdkDropListDropped)="drop($event)" class="column">
     <mat-card-title>To do</mat-card-title>
     <mat-divider></mat-divider>
     <div class="scroll">
-        <mat-card class="task" *ngFor="let d of tab" cdkDrag>{{d}}</mat-card>
+        <mat-card class="task" *ngFor="let d of tasks" cdkDrag>{{d.designation}}</mat-card>
     </div>
     <mat-divider class="sep"></mat-divider>
-    <div class="form">
-      <form>
-        <mat-form-field>
-          <input matInput #task placeholder="Add a new task">
-        </mat-form-field>
-        <button class="addTask" mat-raised-button color="warn" (click)="addNewTask(task.value); task.value=''">Add</button>
-      </form>
-    </div>
+    <button class="addTask" mat-raised-button color="warn" (click)="openDialog();">Add</button>
   </mat-card>
 
   <!-- In progres -->
@@ -25,14 +18,7 @@
       <mat-card class="task" *ngFor="let d of tab2" cdkDrag>{{d}}</mat-card>
     </div>
     <mat-divider class="sep"></mat-divider>
-    <div class="form">
-      <form>
-        <mat-form-field>
-          <input matInput #task placeholder="Add a new task">
-        </mat-form-field>
-        <button class="addTask" mat-raised-button color="warn" (click)="addNewTask(task.value); task.value=''">Add</button>
-      </form>
-    </div>
+    <button class="addTask" mat-raised-button color="warn" (click)="addNewTask();">Add</button>
   </mat-card>
 
   <!-- Done -->
@@ -43,14 +29,7 @@
       <mat-card class="task" *ngFor="let d of tab" cdkDrag>{{d}}</mat-card>
     </div>
     <mat-divider class="sep"></mat-divider>
-    <div class="form">
-      <form>
-        <mat-form-field>
-          <input matInput #task placeholder="Add a new task">
-        </mat-form-field>
-        <button class="addTask" mat-raised-button color="warn" (click)="addNewTask(task.value); task.value=''">Add</button>
-      </form>
-    </div>
+    <button class="addTask" mat-raised-button color="warn" (click)="addNewTask();">Add</button>
   </mat-card>
 
   <!-- In review -->
@@ -61,13 +40,6 @@
       <mat-card class="task" *ngFor="let d of tab2" cdkDrag>{{d}}</mat-card>
     </div>
     <mat-divider class="sep"></mat-divider>
-    <div class="form">
-      <form>
-        <mat-form-field>
-          <input matInput #task placeholder="Add a new task">
-        </mat-form-field>
-        <button class="addTask" mat-raised-button color="warn" (click)="addNewTask(task.value); task.value=''">Add</button>
-      </form>
-    </div>
+    <button class="addTask" mat-raised-button color="warn" (click)="addNewTask();">Add</button>
   </mat-card>
 </div>
