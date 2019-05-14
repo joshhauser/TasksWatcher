@@ -15,7 +15,11 @@ export class BoardComponent implements OnInit {
   tab = ['tab','test','lolllll','okokok','tzaeraab','terrest'];
   tab2 = [1,2,3,4,5,6,7,8,9,87,87,5];
 
-  tasks: Task[] = [];
+  toDo: Task[] = [];
+  inProgress: Task[] = [];
+  done: Task[] = [];
+  inReview: Task[] = [];
+
 
   constructor(
     private tasksService: TasksService,
@@ -27,15 +31,31 @@ export class BoardComponent implements OnInit {
   }
 
   getTasks(){
-    this.tasksService.getTasks().subscribe(res => {
-      res.forEach(col => {
-        const id = col[0];
-        const designation = col[1];
-        const deadline = col[2];
-        const status = col[3];
+    this.tasksService.getTasks().subscribe(tasks => {
+      tasks.forEach(_task => {
+        const id = _task[0];
+        const designation = _task[1];
+        const deadline = _task[2];
+        const status = _task[3];
         const task = new Task(designation, id, deadline, status);
 
-        this.tasks.push(task);
+        switch(task.status){
+          case 0:
+            this.toDo.push(task);
+            break;
+
+          case 1:
+            this.inProgress.push(task);
+            break;
+
+          case 2:
+            this.done.push(task);
+            break;
+
+          case 3:
+            this.inReview.push(task);
+            break;
+        }
       })
     });
     //this.tasks.sort();
@@ -44,8 +64,8 @@ export class BoardComponent implements OnInit {
   deleteTask(t: any){
     if(t != ""){
       this.tasksService.deleteTask(t);
-      let index = this.tasks.indexOf(t);
-      this.tasks.splice(index, 1);
+      let index = this.toDo.indexOf(t);
+      this.toDo.splice(index, 1);
     }
   }
 
@@ -55,6 +75,9 @@ export class BoardComponent implements OnInit {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
       transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
+      console.log(event.container.data);
+      console.log(event.previousContainer.data);
+
     }
   }
 
