@@ -35,6 +35,9 @@ export class TasksService {
     
   }
 
+  updateTask(task: Task){
+    return this.http.put(this.baseUrl + 'UPDATE_TASK.php', task).toPromise();
+  }
 
   deleteTask(t: any){
     this.http.delete(this.baseUrl + 'DELETE_TASK.php?task=' + t).toPromise();
