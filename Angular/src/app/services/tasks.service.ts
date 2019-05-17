@@ -17,10 +17,7 @@ export class TasksService {
   constructor(private http: HttpClient) { }
 
   
-  addNewTask(t: string){
-    let task = {
-      task: t
-    }
+  addNewTask(task: Task){
     return this.http.post(this.baseUrl + 'INSERT_TASK.php', { data : task}).toPromise();
 
   }
@@ -36,11 +33,11 @@ export class TasksService {
   }
 
   updateTask(task: Task){
-    return this.http.put(this.baseUrl + 'UPDATE_TASK.php', task).toPromise();
+    return this.http.put(this.baseUrl + 'UPDATE_TASK.php', { data: task}).toPromise();
   }
 
-  deleteTask(t: any){
-    this.http.delete(this.baseUrl + 'DELETE_TASK.php?task=' + t).toPromise();
+  deleteTask(task: Task){
+    this.http.delete(this.baseUrl + 'DELETE_TASK.php?task=' + task).toPromise();
   }
 
   /*openSnackBar(message: string){

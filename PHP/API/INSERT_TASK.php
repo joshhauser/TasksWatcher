@@ -11,12 +11,16 @@ or die("Impossible to connect");
 mysqli_select_db($connection,$db)
 or die("Database not found.");
 
-$insertRequest = "INSERT INTO $table(task)";
-$insertRequest .= "VALUES(?)";
+$designation = $datas->data->designation;
+$deadline = substr($datas->data->deadline, 0, 10);
+$status = $datas->data->status;
+
+$insertRequest = "INSERT INTO $table(designation, deadline, status)";
+$insertRequest .= "VALUES(?,?,?)";
 
 $requestPrepare = mysqli_prepare($connection, $insertRequest);
 
-mysqli_stmt_bind_param($requestPrepare,'s', $datas->data->task);
+mysqli_stmt_bind_param($requestPrepare,'ssi', $designation, $deadline, $status);
 mysqli_stmt_execute($requestPrepare);
 mysqli_close($connection);
 ?>

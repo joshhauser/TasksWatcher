@@ -7,7 +7,7 @@
       <mat-card class="task" *ngFor="let task of toDo" cdkDrag>{{task.designation}}</mat-card>
     </div>
     <mat-divider class="sep"></mat-divider>
-    <button class="addTask" mat-raised-button color="warn" (click)="openDialog();">Add</button>
+    <button class="addTask" mat-raised-button color="warn" (click)="console.log('');">Add</button>
   </mat-card>
 
   <!-- In progres -->
@@ -18,7 +18,7 @@
       <mat-card class="task" *ngFor="let task of inProgress" cdkDrag>{{task.designation}}</mat-card>
     </div>
     <mat-divider class="sep"></mat-divider>
-    <button class="addTask" mat-raised-button color="warn" (click)="addNewTask();">Add</button>
+    <button class="addTask" mat-raised-button color="warn" (click)="console.log('');">Add</button>
   </mat-card>
 
   <!-- Done -->
@@ -29,7 +29,7 @@
       <mat-card class="task" *ngFor="let task of done" cdkDrag>{{task.designation}}</mat-card>
     </div>
     <mat-divider class="sep"></mat-divider>
-    <button class="addTask" mat-raised-button color="warn" (click)="addNewTask();">Add</button>
+    <button class="addTask" mat-raised-button color="warn" (click)="console.log('');">Add</button>
   </mat-card>
 
   <!-- In review -->
@@ -40,6 +40,6 @@
       <mat-card class="task" *ngFor="let task of inReview" cdkDrag>{{task.designation}}</mat-card>
     </div>
     <mat-divider class="sep"></mat-divider>
-    <button class="addTask" mat-raised-button color="warn" (click)="addNewTask();">Add</button>
+    <button class="addTask" mat-raised-button color="warn" (click)="console.log('');">Add</button>
   </mat-card>
 </div>
