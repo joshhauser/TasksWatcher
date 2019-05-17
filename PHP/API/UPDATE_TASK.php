@@ -13,7 +13,9 @@ or die('Databse not found.');
 
 $id = $datas->data->id;
 $designation = $datas->data->designation;
-$deadline = substr($datas->data->deadline, 0, 10);
+$deadline = $datas->data->deadline;
+if(strlen($deadline) > 10)
+    $deadline = substr($deadline, 0, 10);
 $status = $datas->data->status;
 
 $updateRequest = "UPDATE $table SET ";

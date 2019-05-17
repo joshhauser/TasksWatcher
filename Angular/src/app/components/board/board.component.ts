@@ -33,6 +33,13 @@ export class BoardComponent implements OnInit {
   }
 
 
+  /**
+   * Get tasks from DB and push them in the list that corresponds to their status.
+   * 0 : To do
+   * 1: In progress
+   * 2: Done
+   * 3: In review
+   */
   getTasks(){
     this.tasksService.getTasks().subscribe(tasks => {
       tasks.forEach(_task => {
@@ -68,8 +75,10 @@ export class BoardComponent implements OnInit {
   }
 
   
-  
-
+  /**
+   * 
+   * @param t : the task do delete
+   */
   deleteTask(t: any){
     if(t != ""){
       this.tasksService.deleteTask(t);
@@ -78,23 +87,35 @@ export class BoardComponent implements OnInit {
     }
   }
 
-  drop(event: CdkDragDrop<string[]>) {
+  /**
+   * 
+   * @param event : the event that correspond to the drag&drop
+   */
+  drop(event: CdkDragDrop<Task[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
       transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
-      
+
+      //get indexes of previous list and current list
       let previousIndex = Number(event.previousContainer._dropListRef.id.charAt(event.previousContainer._dropListRef.id.length -1));
       let currentIndex = Number(event.container._dropListRef.id.charAt(event.container._dropListRef.id.length -1));
 
+      //Get arrays witch correspond to indexes
       let previousArray = this.getArrayByIndex(previousIndex, 'original');
       let previousCopy = this.getArrayByIndex(previousIndex, 'copy');
       let currentArray = this.getArrayByIndex(currentIndex, 'original');
       let currentCopy = this.getArrayByIndex(currentIndex, 'copy');
 
-      this.compare(currentArray, currentCopy);
+      //Get the task to update
+      let taskToUpdate = this.compare(currentArray, currentCopy);
+
+      //Update lists
       this.updateArrays(previousArray, previousCopy);
       this.updateArrays(currentArray, currentCopy);
+
+      //Update task's status
+      this.updateStatus(taskToUpdate, currentIndex);
     }
   }
 
@@ -126,13 +147,16 @@ export class BoardComponent implements OnInit {
   compare(array: Task[], copyOfArray: Task[]){
     for(let i = 0; i < array.length; i++){
       if(copyOfArray.indexOf(array[i]) == -1){
-        this.updateStatus(array[i]);
+        return array[i];
       }
     }
   }
 
-  updateStatus(task: Task){
+  updateStatus(t: Task, status: number){
+    console.log(t.deadline);
+    let task = new Task(t.designation, t.id, t.deadline, status);
     console.log(task);
+    this.tasksService.updateTask(task);
   }
 
   openDialog(): void {
