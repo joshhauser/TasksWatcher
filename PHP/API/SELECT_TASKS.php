@@ -11,6 +11,9 @@ or die("Impossible to connect");
 mysqli_select_db($connection,$db)
 or die("Database not found.");
 
+//Force encoding
+mysqli_set_charset($connection,"utf8");
+
 $request = "SELECT * from $table";
 $result = mysqli_query($connection,$request);
 
