@@ -11,6 +11,8 @@ or die("Impossible to connect");
 mysqli_select_db($connection,$db)
 or die("Database not found.");
 
+mysqli_set_charset($connection,"utf8");
+
 $designation = $datas->data->designation;
 $deadline = substr($datas->data->deadline, 0, 10);
 $status = $datas->data->status;

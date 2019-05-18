@@ -25,7 +25,7 @@ export class TasksService {
   getTasks(): Observable<any[]>{
     return this.http.get<Task>(this.baseUrl + 'SELECT_TASKS.php').pipe(
       map((res) => {
-        this.tasks = res['data'];
+        this.Tasks.next(res['data']);
         return this.tasks;
       })
     );

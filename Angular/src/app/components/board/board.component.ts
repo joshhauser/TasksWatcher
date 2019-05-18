@@ -1,9 +1,9 @@
-import { Component, OnInit, Inject, IterableDiffers } from '@angular/core';
+import { Component, OnInit, Inject, IterableDiffers, Input } from '@angular/core';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { TasksService } from 'src/app/services/tasks.service';
 import { Task } from 'src/app/model';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
-import { CompileMetadataResolver } from '@angular/compiler';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'board',
@@ -29,7 +29,7 @@ export class BoardComponent implements OnInit {
     ) { }
 
   ngOnInit(){
-    this.getTasks();
+    this.tasksService.getTasks().toPromise().then(() => this.getTasks());
   }
 
 
@@ -41,7 +41,7 @@ export class BoardComponent implements OnInit {
    * 3: In review
    */
   getTasks(){
-    this.tasksService.getTasks().subscribe(tasks => {
+    this.tasksService.Tasks.subscribe(tasks => {
       tasks.forEach(_task => {
         const id = _task[0];
         const designation = _task[1];
@@ -76,7 +76,7 @@ export class BoardComponent implements OnInit {
 
   
   /**
-   * 
+   * Delete a task
    * @param t : the task do delete
    */
   deleteTask(t: any){
@@ -88,7 +88,7 @@ export class BoardComponent implements OnInit {
   }
 
   /**
-   * 
+   * Called at each drag&drop
    * @param event : the event that correspond to the drag&drop
    */
   drop(event: CdkDragDrop<Task[]>) {
@@ -119,6 +119,11 @@ export class BoardComponent implements OnInit {
     }
   }
 
+  /**
+   * Return an array which corresponds to index and mode
+   * @param index : index of the list
+   * @param mode  : original or copy
+   */
   getArrayByIndex(index, mode){
     if(mode == 'original'){
       switch(index){
@@ -138,12 +143,23 @@ export class BoardComponent implements OnInit {
     }
   }
   
+  /**
+   * Update datas in arrays
+   * @param array : the array to update
+   * @param copy : the copy of the array
+   */
   updateArrays(array: Task[], copy: Task[]){
       copy = [];
       if(array.length > 0)
         array.forEach(val => copy.push(val));
   }
 
+
+  /**
+   * Compare two array to determine which is the moved task
+   * @param array
+   * @param copyOfArray 
+   */
   compare(array: Task[], copyOfArray: Task[]){
     for(let i = 0; i < array.length; i++){
       if(copyOfArray.indexOf(array[i]) == -1){
@@ -152,25 +168,30 @@ export class BoardComponent implements OnInit {
     }
   }
 
+
+  /**
+   * Update task's status
+   * @param t : task
+   * @param status : status (index of the list in which the task has been dropped)
+   */
   updateStatus(t: Task, status: number){
-    console.log(t.deadline);
     let task = new Task(t.designation, t.id, t.deadline, status);
-    console.log(task);
     this.tasksService.updateTask(task);
   }
 
-  openDialog(): void {
+
+  /**
+   * Open dialog for task creation
+   * @param listIndex : index
+   */
+  openDialog(listIndex: number): void {
     const dialogRef = this.dialog.open(CreateTask, {
-      width: '250px',
-      height: '300px',
-      data: "ouais"
+      width: '500px',
+      height: '270px',
+      data: listIndex
     });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
+    
   }
-
 }
 
 
@@ -180,11 +201,23 @@ export class BoardComponent implements OnInit {
   styleUrls: ['../create-task/create-task.scss'],
 })
 
-
 export class CreateTask {
+
+  @Input() newTask = new Task(null, null, null , null);
+  minDate = new Date('2019-05-18');
+  formControl = new FormControl('', [Validators.required]);
+
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<CreateTask>,
+    private tasksService: TasksService,
     ) {}
-    
+
+    /**
+     * Add a new task
+     */
+    addTask(){
+      this.newTask.status = this.data;
+      this.tasksService.addNewTask(this.newTask);
+    }
 }
