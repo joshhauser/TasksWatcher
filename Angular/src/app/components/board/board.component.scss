@@ -32,6 +32,13 @@
     color: black;
     background-color: white;
     font-size: 11pt;
+
+    p{
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 25em;
+    }
 }
 
 .addTask{

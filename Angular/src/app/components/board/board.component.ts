@@ -41,7 +41,7 @@ export class BoardComponent implements OnInit {
    * 3: In review
    */
   getTasks(){
-    this.tasksService.Tasks.subscribe(tasks => {
+    this.tasksService.getTasks().subscribe(tasks => {
       tasks.forEach(_task => {
         const id = _task[0];
         const designation = _task[1];
@@ -51,8 +51,10 @@ export class BoardComponent implements OnInit {
 
         switch(task.status){
           case 0:
-            this.toDo.push(task);
-            this.copyOfToDo.push(task);
+            if(!this.findInlist(this.toDo, task) && !this.findInlist(this.copyOfToDo, task)){
+              this.toDo.push(task);
+              this.copyOfToDo.push(task);
+            }
             break;
 
           case 1:
@@ -74,6 +76,12 @@ export class BoardComponent implements OnInit {
     });
   }
 
+  findInlist(list: any[], element: any){
+    let isInList: boolean;
+    list.forEach(e => e === element ? isInList = true : isInList = false);
+
+    return isInList;
+  }
   
   /**
    * Delete a task
@@ -184,11 +192,21 @@ export class BoardComponent implements OnInit {
    * Open dialog for task creation
    * @param listIndex : index
    */
-  openDialog(listIndex: number): void {
+  createTask(listIndex: number): void {
     const dialogRef = this.dialog.open(CreateTask, {
       width: '500px',
       height: '270px',
       data: listIndex
+    });
+
+    dialogRef.afterClosed().subscribe((res) => {
+      if(res != undefined && res != ''){
+        this.tasksService.getTasks();
+        let array = this.getArrayByIndex(listIndex, "original");
+        let copyOfArray = this.getArrayByIndex(listIndex, "copy");
+        array.push(this.tasksService.tasks[this.tasksService.tasks.length -1]);
+        copyOfArray.push(this.tasksService.tasks[this.tasksService.tasks.length -1]);
+      }
     });
     
   }
@@ -204,7 +222,7 @@ export class BoardComponent implements OnInit {
 export class CreateTask {
 
   @Input() newTask = new Task(null, null, null , null);
-  minDate = new Date('2019-05-18');
+  minDate = new Date(Date.now());
   formControl = new FormControl('', [Validators.required]);
 
   constructor(
@@ -220,4 +238,28 @@ export class CreateTask {
       this.newTask.status = this.data;
       this.tasksService.addNewTask(this.newTask);
     }
+}
+
+export class EditTask {
+
+  @Input() task = new Task(null, null, null, null);
+  minDate = new Date(Date.now());
+  formControl = new FormControl('', [Validators.required]);
+
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    public dialogRef: MatDialogRef<EditTask>,
+    private tasksService: TasksService
+  ){}
+
+  /**
+   * Update a task
+   */
+  updateTask(){
+
+  }
+
+  deleteTask(){
+
+  }
 }

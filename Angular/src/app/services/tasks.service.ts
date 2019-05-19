@@ -12,24 +12,31 @@ export class TasksService {
   Tasks = new BehaviorSubject<Task[]>(null);
 
   baseUrl = 'http://localhost/kanban/';
-  private tasks: Task[] = [];
+  tasks: Task[] = [];
 
   constructor(private http: HttpClient) { }
 
   
   addNewTask(task: Task){
-    return this.http.post(this.baseUrl + 'INSERT_TASK.php', { data : task}).toPromise();
-
+    return this.http.post(this.baseUrl + 'INSERT_TASK.php', { data : task}).toPromise().then(() => this.tasks.push(task));
   }
 
-  getTasks(): Observable<any[]>{
+  /*getTasks(): Observable<any[]>{
     return this.http.get<Task>(this.baseUrl + 'SELECT_TASKS.php').pipe(
       map((res) => {
         this.Tasks.next(res['data']);
         return this.tasks;
       })
+    );    
+  }*/
+
+  getTasks(): Observable<Task[]>{
+    return this.http.get<Task>(this.baseUrl + 'SELECT_TASKS.php').pipe(
+      map((res) => {
+        this.tasks = res['data'];
+        return this.tasks;
+      })
     );
-    
   }
 
   updateTask(task: Task){
