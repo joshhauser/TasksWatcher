@@ -85,12 +85,23 @@ export class BoardComponent implements OnInit {
    * Delete a task
    * @param t : the task do delete
    */
-  deleteTask(t: any){
-    if(t != ""){
-      this.tasksService.deleteTask(t);
-      let index = this.toDo.indexOf(t);
+  /*deleteTask(task: Task){
+    if(task != null){
+      this.tasksService.deleteTask(task);
+      let index = this.toDo.indexOf(task);
       this.toDo.splice(index, 1);
     }
+  }*/
+
+  deleteTask(listIndex: number, task: Task){
+    this.tasksService.deleteTask(task);
+    let array = this.getArrayByIndex(listIndex, 'original');
+    let copyOfArray = this.getArrayByIndex(listIndex, 'copy');
+
+    let taskIndex = array.indexOf(task);
+    array.splice(taskIndex, 1);
+    taskIndex = copyOfArray.indexOf(task);
+    copyOfArray.splice(taskIndex, 1);
   }
 
   /**
@@ -98,9 +109,10 @@ export class BoardComponent implements OnInit {
    * @param event : the event that correspond to the drag&drop
    */
   drop(event: CdkDragDrop<Task[]>) {
-    if (event.previousContainer === event.container) {
+    if(event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    } else {
+    }
+    else{
       transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
 
       //get indexes of previous list and current list
@@ -209,7 +221,14 @@ export class BoardComponent implements OnInit {
   }
 
   editTask(listIndex: number, task: Task): void{
-
+    const dialogRef = this.dialog.open(EditTask, {
+      width: '500px',
+      height: '270px',
+      data: {
+        listIndex,
+        task
+      }
+    });
   }
 }
 
@@ -250,9 +269,9 @@ export class CreateTask {
 
 export class EditTask {
 
-  @Input() task = new Task(null, null, null, null);
   minDate = new Date(Date.now());
   formControl = new FormControl('', [Validators.required]);
+  @Input() task = this.data.task;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -264,7 +283,7 @@ export class EditTask {
    * Update a task
    */
   updateTask(){
-
+    this.tasksService.updateTask(this.task);
   }
 
   deleteTask(){

@@ -5,7 +5,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { BoardComponent, CreateTask } from './components/board/board.component';
+import { BoardComponent, CreateTask, EditTask } from './components/board/board.component';
 
 
 /* Material modules & animations */
@@ -26,7 +26,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   declarations: [
     AppComponent,
     BoardComponent,
-    CreateTask
+    CreateTask,
+    EditTask
   ],
   imports: [
     HttpClientModule,
@@ -49,6 +50,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents: [CreateTask]
+  entryComponents: [
+    CreateTask,
+    EditTask
+  ]
 })
 export class AppModule { }

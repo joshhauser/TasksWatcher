@@ -4,7 +4,7 @@
     <mat-card-title>To do</mat-card-title>
     <mat-divider></mat-divider>
     <div class="scroll">
-      <mat-card class="task" *ngFor="let task of toDo" cdkDrag><p>{{task.designation}}</p></mat-card>
+      <mat-card class="task" *ngFor="let task of toDo" cdkDrag (click)="editTask(0, task);"><p>{{task.designation}}</p></mat-card>
     </div>
     <mat-divider class="sep"></mat-divider>
     <button class="addTask" mat-raised-button color="warn" (click)="createTask(0);">Add</button>

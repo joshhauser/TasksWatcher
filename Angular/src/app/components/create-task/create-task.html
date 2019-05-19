@@ -13,5 +13,5 @@
 </div>
 <mat-dialog-actions fxLayoutAlign="end end">
     <button mat-button mat-dialog-close>Cancel</button>
-    <button mat-button [mat-dialog-close]="true" (click)="addTask();" [disabled]="newTask.designation == null || newTask.designation == ''" cdkFocusInitial>Add</button>
+    <button mat-button [mat-dialog-close]="true" (click)="addTask();" [disabled]="newTask.designation == null || newTask.designation == ''">Add</button>
 </mat-dialog-actions>
