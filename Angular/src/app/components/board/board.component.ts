@@ -51,10 +51,8 @@ export class BoardComponent implements OnInit {
 
         switch(task.status){
           case 0:
-            if(!this.findInlist(this.toDo, task) && !this.findInlist(this.copyOfToDo, task)){
-              this.toDo.push(task);
-              this.copyOfToDo.push(task);
-            }
+            this.toDo.push(task);
+            this.copyOfToDo.push(task);
             break;
 
           case 1:
@@ -208,7 +206,10 @@ export class BoardComponent implements OnInit {
         copyOfArray.push(this.tasksService.tasks[this.tasksService.tasks.length -1]);
       }
     });
-    
+  }
+
+  editTask(listIndex: number, task: Task): void{
+
   }
 }
 
@@ -239,6 +240,13 @@ export class CreateTask {
       this.tasksService.addNewTask(this.newTask);
     }
 }
+
+
+@Component({
+  selector: 'edit-task',
+  templateUrl: '../edit-task/edit-task.html',
+  styleUrls: ['../edit-task/edit-task.scss'],
+})
 
 export class EditTask {
 
