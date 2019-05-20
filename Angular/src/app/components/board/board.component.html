@@ -4,7 +4,12 @@
     <mat-card-title>To do</mat-card-title>
     <mat-divider></mat-divider>
     <div class="scroll">
-      <mat-card class="task" *ngFor="let task of toDo" cdkDrag (click)="editTask(0, task);"><p>{{task.designation}}</p></mat-card>
+      <mat-card class="task" *ngFor="let task of toDo" cdkDrag (click)="editTask(0, task);">
+        <p>{{task.designation}}</p>
+        <div class="deadlineContainer" [ngStyle]="{'background-color': '#f55b45'}" *ngIf="task.deadline != '0000-00-00'">
+          <span class="deadline">{{task.deadline}}</span>
+        </div>
+      </mat-card>
     </div>
     <mat-divider class="sep"></mat-divider>
     <button class="addTask" mat-raised-button color="warn" (click)="createTask(0);">Add</button>
@@ -15,7 +20,15 @@
     <mat-card-title>In progress</mat-card-title>
     <mat-divider></mat-divider>
     <div class="scroll">
-      <mat-card class="task" *ngFor="let task of inProgress" cdkDrag><p>{{task.designation}}</p></mat-card>
+      <mat-card class="task" *ngFor="let task of inProgress" cdkDrag (click)="editTask(0, task);">
+        <p>{{task.designation}}</p>
+        <mat-card class="task" *ngFor="let task of toDo" cdkDrag (click)="editTask(0, task);">
+          <p>{{task.designation}}</p>
+          <div class="deadlineContainer" [ngStyle]="{'background-color': '#f55b45'}" *ngIf="task.deadline != '0000-00-00'">
+            <span class="deadline">{{task.deadline}}</span>
+          </div>
+        </mat-card>
+      </mat-card>
     </div>
     <mat-divider class="sep"></mat-divider>
     <button class="addTask" mat-raised-button color="warn" (click)="createTask(1);">Add</button>
@@ -26,7 +39,12 @@
     <mat-card-title>Done</mat-card-title>
     <mat-divider></mat-divider>
     <div class="scroll">
-      <mat-card class="task" *ngFor="let task of done" cdkDrag><p>{{task.designation}}</p></mat-card>
+      <mat-card class="task" *ngFor="let task of done" cdkDrag (click)="editTask(2, task);">
+        <p>{{task.designation}}</p>
+        <div class="deadlineContainer" [ngStyle]="{'background-color': '#f55b45'}" *ngIf="task.deadline != '0000-00-00'">
+          <span class="deadline">{{task.deadline}}</span>
+        </div>
+      </mat-card>
     </div>
     <mat-divider class="sep"></mat-divider>
     <button class="addTask" mat-raised-button color="warn" (click)="createTask(2);">Add</button>
@@ -37,7 +55,12 @@
     <mat-card-title>In review</mat-card-title>
     <mat-divider></mat-divider>
     <div class="scroll">
-      <mat-card class="task" *ngFor="let task of inReview" cdkDrag><p>{{task.designation}}</p></mat-card>
+      <mat-card class="task" *ngFor="let task of inReview" cdkDrag (click)="editTask(3, task);">
+        <p>{{task.designation}}</p>
+        <div class="deadlineContainer" [ngStyle]="{'background-color': '#f55b45'}" *ngIf="task.deadline != '0000-00-00'">
+          <span class="deadline">{{task.deadline}}</span>
+        </div>
+      </mat-card>
     </div>
     <mat-divider class="sep"></mat-divider>
     <button class="addTask" mat-raised-button color="warn" (click)="createTask(3);">Add</button>

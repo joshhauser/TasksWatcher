@@ -18,11 +18,14 @@ export class BoardComponent implements OnInit {
   done: Task[] = [];
   inReview: Task[] = [];
 
+  color: 'red';
+
   copyOfToDo: Task[] = [];
   copyOfInProgress: Task[] = [];
   copyOfDone: Task[] = [];
   copyOfInReview: Task[] = [];
 
+  wrongDate = new Date('0000-00-00');
   constructor(
     private tasksService: TasksService,
     private dialog: MatDialog
