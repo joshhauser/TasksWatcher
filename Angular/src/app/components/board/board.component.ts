@@ -226,7 +226,6 @@ export class BoardComponent implements OnInit {
   editTask(listIndex: number, task: Task): void{
     const dialogRef = this.dialog.open(EditTask, {
       width: '500px',
-      height: '270px',
       data: {
         listIndex,
         task

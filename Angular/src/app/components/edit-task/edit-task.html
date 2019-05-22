@@ -1,5 +1,5 @@
 <h1 mat-dialog-title>Edit task</h1>
-<div mat-dialog-content>
+<div id="content" mat-dialog-content>
   <mat-form-field>
     <input matInput [formControl]="formControl" [(ngModel)]="task.designation" placeholder="Title">
     <mat-error *ngIf="formControl.hasError('required');">Please enter a title for your task.</mat-error>
@@ -10,8 +10,12 @@
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
+  <br>
+  <button id="delete" mat-raised-button color="warn">
+    <mat-icon>delete</mat-icon><span>Delete</span>
+  </button>
 </div>
-<mat-dialog-actions fxLayoutAlign="end end">
+<mat-dialog-actions fxLayoutAlign="end">
     <button mat-button mat-dialog-close>Cancel</button>
     <button mat-button [mat-dialog-close]="true" (click)="updateTask();" [disabled]="task.designation == null || task.designation == ''" cdkFocusInitial>Save</button>
 </mat-dialog-actions>
