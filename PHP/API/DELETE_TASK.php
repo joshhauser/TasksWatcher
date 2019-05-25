@@ -1,7 +1,7 @@
 <?php
 require_once("db_settings.php");
 
-$task = $_GET['task'];
+$taskID = $_GET['taskID'];
 
 $table= "tasks";
 
@@ -11,7 +11,7 @@ or die("Impossible to connect");
 mysqli_select_db($connection,$db)
 or die("Database not found.");
 
-$deleteRequest = "DELETE FROM $table WHERE task='$task'";
+$deleteRequest = "DELETE FROM $table WHERE id='$taskID'";
 
 $result = mysqli_query($connection,$deleteRequest);
 

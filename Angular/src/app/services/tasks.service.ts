@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { Task } from '../model';
+import { MatSnackBar } from '@angular/material';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,9 @@ export class TasksService {
   baseUrl = 'http://localhost/kanban/';
   tasks: Task[] = [];
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private snackBar: MatSnackBar) { }
 
   
   addNewTask(task: Task){
@@ -44,13 +47,21 @@ export class TasksService {
   }
 
   deleteTask(task: Task){
-    this.http.delete(this.baseUrl + 'DELETE_TASK.php?task=' + task).toPromise();
+    this.http.delete(this.baseUrl + 'DELETE_TASK.php?taskID=' + task.id).toPromise()
+    .then((success) => this.openSnackBar('The task ' + task.deadline + ' has been deleted successfully !'),
+          (error) => console.log(error));
+
+          //this.openSnackBar('Ooops something went wrong: ' + error)
   }
 
-  /*openSnackBar(message: string){
+  /* deleteTask(t: any){
+    this.http.delete(this.baseUrl + 'DELETE_TASK.php?task=' + t).toPromise()
+  } */
+
+  openSnackBar(message: string){
     let snackbar = this.snackBar.open(message, 'Cancel');
 
     snackbar.onAction().subscribe(() => this.snackBar.dismiss());
-  }*/
+  }
   
 }

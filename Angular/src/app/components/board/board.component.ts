@@ -214,11 +214,11 @@ export class BoardComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((res) => {
       if(res != undefined && res != ''){
-        this.tasksService.getTasks();
         let array = this.getArrayByIndex(listIndex, "original");
         let copyOfArray = this.getArrayByIndex(listIndex, "copy");
-        array.push(this.tasksService.tasks[this.tasksService.tasks.length -1]);
-        copyOfArray.push(this.tasksService.tasks[this.tasksService.tasks.length -1]);
+        array.length = 0;
+        copyOfArray.length = 0;
+        this.getTasks();   
       }
     });
   }
@@ -229,6 +229,16 @@ export class BoardComponent implements OnInit {
       data: {
         listIndex,
         task
+      }
+    });
+
+    dialogRef.afterClosed().subscribe((res) => {
+      if(res != undefined && res != ''){
+        let array = this.getArrayByIndex(listIndex, "original");
+        let copyOfArray = this.getArrayByIndex(listIndex, "copy");
+        array.length = 0;
+        copyOfArray.length = 0;
+        this.getTasks();   
       }
     });
   }
@@ -274,21 +284,28 @@ export class EditTask {
   minDate = new Date(Date.now());
   formControl = new FormControl('', [Validators.required]);
   @Input() task = this.data.task;
+  selectedStatus: string;
+  
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<EditTask>,
     private tasksService: TasksService
-  ){}
+  ){ }
+
+  ngOnInit(){
+    this.selectedStatus = Task.getStatusLabel(this.task.status);
+  }
 
   /**
    * Update a task
    */
   updateTask(){
+    this.task.status = Task.getStatusInt(this.selectedStatus);
     this.tasksService.updateTask(this.task);
   }
 
-  deleteTask(){
-
+  deleteTask(task: Task){
+    this.tasksService.deleteTask(task);
   }
 }

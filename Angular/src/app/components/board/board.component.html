@@ -20,14 +20,11 @@
     <mat-card-title>In progress</mat-card-title>
     <mat-divider></mat-divider>
     <div class="scroll">
-      <mat-card class="task" *ngFor="let task of inProgress" cdkDrag (click)="editTask(0, task);">
+      <mat-card class="task" *ngFor="let task of inProgress" cdkDrag (click)="editTask(1, task);">
         <p>{{task.designation}}</p>
-        <mat-card class="task" *ngFor="let task of toDo" cdkDrag (click)="editTask(0, task);">
-          <p>{{task.designation}}</p>
-          <div class="deadlineContainer" [ngStyle]="{'background-color': '#f55b45'}" *ngIf="task.deadline != '0000-00-00'">
-            <span class="deadline">{{task.deadline}}</span>
-          </div>
-        </mat-card>
+        <div class="deadlineContainer" [ngStyle]="{'background-color': '#f55b45'}" *ngIf="task.deadline != '0000-00-00'">
+          <span class="deadline">{{task.deadline}}</span>
+        </div>
       </mat-card>
     </div>
     <mat-divider class="sep"></mat-divider>

@@ -11,11 +11,19 @@
     <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
   <br>
-  <button id="delete" mat-raised-button color="warn">
-    <mat-icon>delete</mat-icon><span>Delete</span>
-  </button>
+  <mat-form-field>
+    <mat-label>Status</mat-label>
+    <mat-select [(value)]="selectedStatus">
+      <mat-option value="To do">To do</mat-option>
+      <mat-option value="In progress">In progress</mat-option>
+      <mat-option value="Done">Done</mat-option>
+      <mat-option value="In review">In review</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <br>
 </div>
 <mat-dialog-actions fxLayoutAlign="end">
-    <button mat-button mat-dialog-close>Cancel</button>
-    <button mat-button [mat-dialog-close]="true" (click)="updateTask();" [disabled]="task.designation == null || task.designation == ''" cdkFocusInitial>Save</button>
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button id="delete" mat-raised-button color="warn" [mat-dialog-close]="true" (click)="deleteTask(task);">Delete</button>
+  <button mat-raised-button [mat-dialog-close]="true" (click)="updateTask();" [disabled]="task.designation == null || task.designation == ''" color="accent" cdkFocusInitial>Save</button>
 </mat-dialog-actions>
