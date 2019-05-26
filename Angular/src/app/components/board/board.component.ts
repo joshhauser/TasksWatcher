@@ -311,8 +311,7 @@ export class EditTask {
     this.task.status = Task.getStatusInt(this.selectedStatus);
     const deadline = new Date(this.task.deadline);
     deadline.setDate(deadline.getDate() + 1);
-    console.log(deadline);
-    //this.tasksService.updateTask(this.task); 
+    this.tasksService.updateTask(this.task); 
   }
 
   deleteTask(task: Task){
