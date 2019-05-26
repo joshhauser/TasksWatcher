@@ -5,6 +5,7 @@ export class Task{
     designation: string;
     deadline: Date;
     status: number;
+    deadlineColor: string;
 
     constructor(designation: string, id?: number, deadline?: Date, status?: number){
         this.id = id;

@@ -48,7 +48,7 @@ export class TasksService {
 
   deleteTask(task: Task){
     this.http.delete(this.baseUrl + 'DELETE_TASK.php?taskID=' + task.id).toPromise()
-    .then((success) => this.openSnackBar('The task ' + task.deadline + ' has been deleted successfully !'),
+    .then((success) => this.openSnackBar('The task ' + task.designation + ' has been deleted successfully !'),
           (error) => console.log(error));
 
           //this.openSnackBar('Ooops something went wrong: ' + error)

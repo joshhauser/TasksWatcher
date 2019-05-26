@@ -4,6 +4,7 @@ import { TasksService } from 'src/app/services/tasks.service';
 import { Task } from 'src/app/model';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormControl, Validators } from '@angular/forms';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'board',
@@ -18,30 +19,27 @@ export class BoardComponent implements OnInit {
   done: Task[] = [];
   inReview: Task[] = [];
 
-  color: 'red';
-
   copyOfToDo: Task[] = [];
   copyOfInProgress: Task[] = [];
   copyOfDone: Task[] = [];
   copyOfInReview: Task[] = [];
 
-  wrongDate = new Date('0000-00-00');
   constructor(
     private tasksService: TasksService,
     private dialog: MatDialog
     ) { }
 
   ngOnInit(){
-    this.tasksService.getTasks().toPromise().then(() => this.getTasks());
+    this.getTasks();
   }
 
 
   /**
    * Get tasks from DB and push them in the list that corresponds to their status.
-   * 0 : To do
-   * 1: In progress
-   * 2: Done
-   * 3: In review
+   * 0. To do
+   * 1. In progress
+   * 2. Done
+   * 3. In review
    */
   getTasks(){
     this.tasksService.getTasks().subscribe(tasks => {
@@ -50,7 +48,8 @@ export class BoardComponent implements OnInit {
         const designation = _task[1];
         const deadline = _task[2];
         const status = Number(_task[3]);
-        const task = new Task(designation, id, deadline, status);
+        let task = new Task(designation, id, deadline, status);
+        task.deadlineColor = this.getColorForDeadline(task.deadline);
 
         switch(task.status){
           case 0:
@@ -83,18 +82,6 @@ export class BoardComponent implements OnInit {
 
     return isInList;
   }
-  
-  /**
-   * Delete a task
-   * @param t : the task do delete
-   */
-  /*deleteTask(task: Task){
-    if(task != null){
-      this.tasksService.deleteTask(task);
-      let index = this.toDo.indexOf(task);
-      this.toDo.splice(index, 1);
-    }
-  }*/
 
   deleteTask(listIndex: number, task: Task){
     this.tasksService.deleteTask(task);
@@ -214,10 +201,7 @@ export class BoardComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((res) => {
       if(res != undefined && res != ''){
-        let array = this.getArrayByIndex(listIndex, "original");
-        let copyOfArray = this.getArrayByIndex(listIndex, "copy");
-        array.length = 0;
-        copyOfArray.length = 0;
+        this.flushArrays();
         this.getTasks();   
       }
     });
@@ -234,13 +218,34 @@ export class BoardComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((res) => {
       if(res != undefined && res != ''){
-        let array = this.getArrayByIndex(listIndex, "original");
-        let copyOfArray = this.getArrayByIndex(listIndex, "copy");
-        array.length = 0;
-        copyOfArray.length = 0;
+        this.flushArrays();
         this.getTasks();   
       }
     });
+  }
+
+  flushArrays(){
+    this.toDo.length = 0;
+    this.copyOfToDo.length = 0;
+    this.inProgress.length = 0;
+    this.copyOfInProgress.length = 0;
+    this.done.length = 0;
+    this.copyOfDone.length = 0;
+    this.inReview.length = 0;
+    this.copyOfInReview.length = 0;
+  }
+
+  getColorForDeadline(deadline: any){
+    const currentDate = new Date(Date.now());
+    const _deadline = new Date(deadline);
+    const time = (_deadline.getTime() - currentDate.getTime())/86400000;
+
+    if(time <= 3 && time >= 0)
+      return '#f55b45';
+    else if(time < 0)
+      return '#2d2d2d';
+    else
+      return '#70bb72';
   }
 }
 
@@ -268,6 +273,7 @@ export class CreateTask {
      */
     addTask(){
       this.newTask.status = this.data;
+      this.newTask.deadline.setDate(this.newTask.deadline.getDate() +1);
       this.tasksService.addNewTask(this.newTask);
     }
 }
@@ -290,7 +296,8 @@ export class EditTask {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<EditTask>,
-    private tasksService: TasksService
+    private tasksService: TasksService,
+    private datePipe: DatePipe
   ){ }
 
   ngOnInit(){
@@ -302,7 +309,10 @@ export class EditTask {
    */
   updateTask(){
     this.task.status = Task.getStatusInt(this.selectedStatus);
-    this.tasksService.updateTask(this.task);
+    const deadline = new Date(this.task.deadline);
+    deadline.setDate(deadline.getDate() + 1);
+    console.log(deadline);
+    //this.tasksService.updateTask(this.task); 
   }
 
   deleteTask(task: Task){
