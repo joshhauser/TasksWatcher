@@ -308,10 +308,12 @@ export class EditTask {
    * Update a task
    */
   updateTask(){
-    this.task.status = Task.getStatusInt(this.selectedStatus);
     const deadline = new Date(this.task.deadline);
     deadline.setDate(deadline.getDate() + 1);
-    this.tasksService.updateTask(this.task); 
+    console.log(new Date(deadline.getFullYear().toString() + '-'  + deadline.getMonth().toString() + '-' + deadline.getDate().toString()))
+    let task = new Task(this.task.designation, this.task.id, deadline, Task.getStatusInt(this.selectedStatus));
+    console.log(task);
+    this.tasksService.updateTask(task); 
   }
 
   deleteTask(task: Task){
