@@ -5,8 +5,9 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { BoardComponent, CreateTask, EditTask } from './components/board/board.component';
-
+import { BoardComponent } from './components/board/board.component';
+import { CreateTaskDialog } from './components/dialogs/create-task-dialog/create-task-dialog';
+import { EditTaskDialog } from './components/dialogs/edit-task-dialog/edit-task-dialog';
 
 /* Material modules & animations */
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
@@ -29,8 +30,8 @@ import { DatePipe } from '@angular/common';
   declarations: [
     AppComponent,
     BoardComponent,
-    CreateTask,
-    EditTask
+    CreateTaskDialog,
+    EditTaskDialog
   ],
   imports: [
     HttpClientModule,
@@ -59,8 +60,8 @@ import { DatePipe } from '@angular/common';
   ],
   bootstrap: [AppComponent],
   entryComponents: [
-    CreateTask,
-    EditTask
+    CreateTaskDialog,
+    EditTaskDialog
   ]
 })
 export class AppModule { }

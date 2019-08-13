@@ -1,10 +1,10 @@
-import { Component, OnInit, Inject, IterableDiffers, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { TasksService } from 'src/app/services/tasks.service';
 import { Task } from 'src/app/model';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { FormControl, Validators, FormGroup } from '@angular/forms';
-import { DatePipe } from '@angular/common';
+import { MatDialog } from '@angular/material';
+import { CreateTaskDialog } from '../dialogs/create-task-dialog/create-task-dialog';
+import { EditTaskDialog } from '../dialogs/edit-task-dialog/edit-task-dialog';
 
 @Component({
   selector: 'board',
@@ -164,7 +164,7 @@ export class BoardComponent implements OnInit {
 
 
   /**
-   * Compare two array to determine which is the moved task
+   * Compare two arrays
    * @param array
    * @param copyOfArray 
    */
@@ -193,7 +193,7 @@ export class BoardComponent implements OnInit {
    * @param listIndex : index
    */
   createTask(listIndex: number): void {
-    const dialogRef = this.dialog.open(CreateTask, {
+    const dialogRef = this.dialog.open(CreateTaskDialog, {
       width: '500px',
       height: '270px',
       data: listIndex
@@ -208,7 +208,7 @@ export class BoardComponent implements OnInit {
   }
 
   editTask(listIndex: number, task: Task): void{
-    const dialogRef = this.dialog.open(EditTask, {
+    const dialogRef = this.dialog.open(EditTaskDialog, {
       width: '500px',
       data: {
         listIndex,
@@ -246,92 +246,5 @@ export class BoardComponent implements OnInit {
       return '#2d2d2d';
     else
       return '#70bb72';
-  }
-}
-
-
-@Component({
-  selector: 'create-task',
-  templateUrl: '../create-task/create-task.html',
-  styleUrls: ['../create-task/create-task.scss'],
-})
-
-export class CreateTask {
-
-  @Input() newTask = new Task(null, null, null , null);
-  minDate = new Date(Date.now());
-  formControl = new FormControl('', [Validators.required]);
-
-  constructor(
-    @Inject(MAT_DIALOG_DATA) public data: any,
-    public dialogRef: MatDialogRef<CreateTask>,
-    private tasksService: TasksService,
-    ) {}
-
-    /**
-     * Add a new task
-     */
-    addTask(){
-      this.newTask.status = this.data;
-      this.newTask.deadline.setDate(this.newTask.deadline.getDate() +1);
-      this.tasksService.addNewTask(this.newTask);
-    }
-}
-
-
-@Component({
-  selector: 'edit-task',
-  templateUrl: '../edit-task/edit-task.html',
-  styleUrls: ['../edit-task/edit-task.scss'],
-})
-
-export class EditTask {
-
-  form = new FormGroup({
-    title: new FormControl('', Validators.required),
-    deadline: new FormControl(),
-    status: new FormControl()
-  });
-
-  minDate = new Date(Date.now());
-  formControl = new FormControl('', [Validators.required]);
-  @Input() task = this.data.task;
-  selectedStatus: string;
-  
-
-  constructor(
-    @Inject(MAT_DIALOG_DATA) public data: any,
-    public dialogRef: MatDialogRef<EditTask>,
-    private tasksService: TasksService,
-    private datePipe: DatePipe
-  ){ }
-
-  ngOnInit(){
-    const formValues = {
-      title: this.task.designation,
-      deadline: this.task.deadline,
-      status: Task.getStatusLabel(this.task.status)
-    };
-    this.form.setValue(formValues);
-  }
-
-  /**
-   * Update a task
-   */
-  updateTask(){
-    const designation = this.form.value.title;
-    const deadline = new Date(this.form.value.deadline);
-    const status = this.form.value.status;
-    const oldDeadlineDay = this.task.deadline.split('-')[2];
-
-    if(deadline.getDate() != oldDeadlineDay)
-      deadline.setDate(deadline.getDate() + 1);
-
-    let task = new Task(designation, this.task.id, deadline, Task.getStatusInt(status));
-    this.tasksService.updateTask(task); 
-  }
-
-  deleteTask(task: Task){
-    this.tasksService.deleteTask(task);
   }
 }
