@@ -1,89 +1,95 @@
 .column{
-    margin-left: auto;
-    margin-right: auto;
-    width: 20%;
-    margin-top: 2%;
-    margin-bottom: 5%;
-    max-height: 80vh;
+  margin-left: auto;
+  margin-right: auto;
+  width: 20%;
+  margin-top: 2%;
+  margin-bottom: 5%;
+  max-height: 80vh;
 
-    mat-card-title{
-        font-size: 12pt;
-    }
+  mat-card-title{
+    font-size: 12pt;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
 }
 
 .scroll{
-    overflow-y: auto;
-    height: 70vh;
-    margin-top: 2.5%;
+  overflow-y: auto;
+  height: 70vh;
+  margin-top: 2.5%;
 
-    mat-card{
-        width: 85%;
-        margin-left: 1%;
-    }
+  mat-card{
+      width: 85%;
+      margin-left: 1%;
+  }
 }
 
 .addTask{
-    margin-left: 5%;
+  margin-left: 5%;
 }
 
 .task{
-    .deadlineContainer{
-        width: 6em;
-        text-align: center;
-        padding-top: 0.25em;
-        padding-bottom: 0.25em;
-        color: white;
-        font-weight: 500;
-        margin-bottom: -2%;
-        margin-left: -2%;
-        border-radius: 3px;
-        font-size: 9pt;
-    }
+  .deadlineContainer{
+      width: 6em;
+      text-align: center;
+      padding-top: 0.25em;
+      padding-bottom: 0.25em;
+      color: white;
+      font-weight: 500;
+      margin-bottom: -2%;
+      margin-left: -2%;
+      border-radius: 3px;
+      font-size: 9pt;
+  }
 }
 
 .task{
-    margin-top: 6%;
-    color: black;
-    background-color: white;
-    font-size: 11pt;
+  margin-top: 6%;
+  color: black;
+  background-color: white;
+  font-size: 11pt;
 
-    p{
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        max-width: 25em;
-    }
+  p{
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 25em;
+  }
 
 }
 
 .addTask{
-    margin-top: 5%;
-    margin-left: 1%;
+  margin-top: 5%;
+  margin-left: 1%;
 }
 
 .sep{
-    margin-top: 2%;
+  margin-top: 2%;
 }
 
 .cdk-drag-preview {
-    box-sizing: border-box;
-    margin-top: 0;
+  box-sizing: border-box;
+  margin-top: 0;
 }
 
 @media(max-width: 1000px){
-    .column{
-        width: 75%;
-    }
+  .column{
+      width: 75%;
+  }
 
-    .scroll{
-        margin-top: 3%;
-        height: 60vh;
-        
-        mat-card{
-            width: 92.5%;
-            margin-left: 1%;
-            margin-top: 3%;
-        }
-    }
-    
+  .scroll{
+      margin-top: 3%;
+      height: 60vh;
+      
+      mat-card{
+          width: 92.5%;
+          margin-left: 1%;
+          margin-top: 3%;
+      }
+  }
+  
 }
