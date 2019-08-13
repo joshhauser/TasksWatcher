@@ -3,7 +3,7 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
 import { TasksService } from 'src/app/services/tasks.service';
 import { Task } from 'src/app/model';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 
 @Component({
@@ -287,6 +287,12 @@ export class CreateTask {
 
 export class EditTask {
 
+  form = new FormGroup({
+    title: new FormControl('', Validators.required),
+    deadline: new FormControl(),
+    status: new FormControl()
+  });
+
   minDate = new Date(Date.now());
   formControl = new FormControl('', [Validators.required]);
   @Input() task = this.data.task;
@@ -301,18 +307,27 @@ export class EditTask {
   ){ }
 
   ngOnInit(){
-    this.selectedStatus = Task.getStatusLabel(this.task.status);
+    const formValues = {
+      title: this.task.designation,
+      deadline: this.task.deadline,
+      status: Task.getStatusLabel(this.task.status)
+    };
+    this.form.setValue(formValues);
   }
 
   /**
    * Update a task
    */
   updateTask(){
-    const deadline = new Date(this.task.deadline);
-    deadline.setDate(deadline.getDate() + 1);
-    console.log(new Date(deadline.getFullYear().toString() + '-'  + deadline.getMonth().toString() + '-' + deadline.getDate().toString()))
-    let task = new Task(this.task.designation, this.task.id, deadline, Task.getStatusInt(this.selectedStatus));
-    console.log(task);
+    const designation = this.form.value.title;
+    const deadline = new Date(this.form.value.deadline);
+    const status = this.form.value.status;
+    const oldDeadlineDay = this.task.deadline.split('-')[2];
+
+    if(deadline.getDate() != oldDeadlineDay)
+      deadline.setDate(deadline.getDate() + 1);
+
+    let task = new Task(designation, this.task.id, deadline, Task.getStatusInt(status));
     this.tasksService.updateTask(task); 
   }
 

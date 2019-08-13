@@ -1,25 +1,27 @@
 <h1 mat-dialog-title>Edit task</h1>
 <div id="content" mat-dialog-content>
-  <mat-form-field>
-    <input matInput [formControl]="formControl" [(ngModel)]="task.designation" placeholder="Title">
-    <mat-error *ngIf="formControl.hasError('required');">Please enter a title for your task.</mat-error>
-  </mat-form-field>
-  <br>
-  <mat-form-field>
-    <input matInput [ngModel]="task.deadline | date:'yyyy-MM-dd'" (ngModelChange)="task.deadline = $event" [value]="task.deadline | date:'yyyy-MM-dd'" [matDatepicker]="picker" [min]="minDate" placeholder="Choose a date">
-    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-datepicker #picker color="accent"></mat-datepicker>
-  </mat-form-field>
-  <br>
-  <mat-form-field>
-    <mat-label>Status</mat-label>
-    <mat-select [(value)]="selectedStatus">
-      <mat-option value="To do">To do</mat-option>
-      <mat-option value="In progress">In progress</mat-option>
-      <mat-option value="Done">Done</mat-option>
-      <mat-option value="In review">In review</mat-option>
-    </mat-select>
-  </mat-form-field>
+  <form [formGroup]="form">
+    <mat-form-field>
+      <input matInput formControlName="title" placeholder="Title">
+      <mat-error *ngIf="form.get('title').hasError('required');">Please enter a title for your task.</mat-error>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+      <input [value]="task.deadline | date: 'yyyy-MM-dd'" formControlName="deadline" matInput [matDatepicker]="picker" [min]="minDate" placeholder="Choose a date">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker color="accent"></mat-datepicker>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+      <mat-label>Status</mat-label>
+      <mat-select formControlName="status">
+        <mat-option value="To do">To do</mat-option>
+        <mat-option value="In progress">In progress</mat-option>
+        <mat-option value="Done">Done</mat-option>
+        <mat-option value="In review">In review</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
   <br>
 </div>
 <mat-dialog-actions fxLayoutAlign="end">
