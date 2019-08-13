@@ -26,6 +26,9 @@
 </div>
 <mat-dialog-actions fxLayoutAlign="end">
   <button mat-button mat-dialog-close>Cancel</button>
-  <button id="delete" mat-raised-button color="warn" [mat-dialog-close]="true" (click)="deleteTask(task);">Delete</button>
+  <button id="delete" mat-raised-button color="warn" [mat-dialog-close]="true" (click)="deleteTask(task);">
+    <mat-icon>delete</mat-icon>
+    <span>Delete</span>
+  </button>
   <button mat-raised-button [mat-dialog-close]="true" (click)="updateTask();" [disabled]="task.designation == null || task.designation == ''" color="accent" cdkFocusInitial>Save</button>
 </mat-dialog-actions>
