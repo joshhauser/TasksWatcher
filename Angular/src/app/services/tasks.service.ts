@@ -24,14 +24,6 @@ export class TasksService {
     return this.http.post(this.baseUrl + 'INSERT_TASK.php', { data : task}).toPromise().then(() => this.tasks.push(task));
   }
 
-  /*getTasks(): Observable<any[]>{
-    return this.http.get<Task>(this.baseUrl + 'SELECT_TASKS.php').pipe(
-      map((res) => {
-        this.Tasks.next(res['data']);
-        return this.tasks;
-      })
-    );    
-  }*/
 
   getTasks(): Observable<Task[]>{
     return this.http.get<Task>(this.baseUrl + 'SELECT_TASKS.php').pipe(

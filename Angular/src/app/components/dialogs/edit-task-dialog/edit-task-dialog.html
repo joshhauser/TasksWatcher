@@ -2,7 +2,11 @@
 <div id="content" mat-dialog-content>
   <form [formGroup]="form">
     <mat-form-field>
-      <input matInput formControlName="title" placeholder="Title">
+      <input (keyup)="onKey($event)" matInput formControlName="title" placeholder="Title">
+      <mat-hint fxLayout="column">
+        {{ charsLeft }} characters left
+        <span style="color: #f45f5f; font-weight: 500" *ngIf="charsLeft < 0">You reached max length for title.</span>
+      </mat-hint>
       <mat-error *ngIf="form.get('title').hasError('required');">Please enter a title for your task.</mat-error>
     </mat-form-field>
     <br>

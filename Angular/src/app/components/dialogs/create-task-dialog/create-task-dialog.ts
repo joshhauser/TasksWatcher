@@ -16,18 +16,26 @@ export class CreateTaskDialog {
   minDate = new Date(Date.now());
   formControl = new FormControl('', [Validators.required]);
 
+  maxTitleLength = 300;
+
+  charsLeft: number;
+
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<CreateTaskDialog>,
     private tasksService: TasksService,
     ) {}
 
-    /**
-     * Add a new task
-     */
-    addTask(){
-      this.newTask.status = this.data;
-      this.newTask.deadline.setDate(this.newTask.deadline.getDate() +1);
-      this.tasksService.addNewTask(this.newTask);
-    }
+  /**
+   * Add a new task
+   */
+  addTask(){
+    this.newTask.status = this.data;
+    this.newTask.deadline.setDate(this.newTask.deadline.getDate() +1);
+    this.tasksService.addNewTask(this.newTask);
+  }
+
+  onKey(event: any){
+    this.charsLeft = this.maxTitleLength - this.formControl.value.length;
+  }
 }

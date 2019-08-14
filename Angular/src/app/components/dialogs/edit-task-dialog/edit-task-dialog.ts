@@ -13,6 +13,10 @@ import { Task } from 'src/app/model';
 
 export class EditTaskDialog {
 
+  maxTitleLength = 300;
+
+  charsLeft: number;
+
   form = new FormGroup({
     title: new FormControl('', Validators.required),
     deadline: new FormControl(),
@@ -37,6 +41,7 @@ export class EditTaskDialog {
       status: Task.getStatusLabel(this.task.status)
     };
     this.form.setValue(formValues);
+    this.charsLeft = this.maxTitleLength - this.form.value.title.length;
   }
 
   /**
@@ -57,5 +62,9 @@ export class EditTaskDialog {
 
   deleteTask(task: Task){
     this.tasksService.deleteTask(task);
+  }
+
+  onKey(event: any){
+    this.charsLeft = this.maxTitleLength - this.form.value.title.length;
   }
 }

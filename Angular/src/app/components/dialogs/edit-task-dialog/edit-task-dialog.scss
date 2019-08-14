@@ -1,5 +1,10 @@
 #content{
-  min-height: 10px;
+  min-height: 15px;
+
+  mat-form-field{
+    margin-bottom: 1.05em;
+    width: 100%;
+  }
 }
 
 h1{
