@@ -1,5 +1,7 @@
-Header set Access-Control-Allow-Origin "http://localhost:4200"
-Header set Access-Control-Max-Age "1000"
-Header set Access-Control-Allow-Headers "X-Requested-With, Content-Type, Origin, Authorization, Accept, Client-Security-Token, Accept-Encoding"
-Header set Access-Control-Allow-Methods "POST, GET, OPTIONS, DELETE, PUT"
+SetEnvIf Origin "http://localhost(:\d{4})$" CRS=$0
+Header always set Access-Control-Allow-Origin "%{CRS}e" env=CRS
+Header merge Vary "Origin"
+Header always set Access-Control-Max-Age "1000"
+Header always set Access-Control-Allow-Headers "X-Requested-With, Content-Type, Origin, Authorization, Accept, Client-Security-Token, Accept-Encoding"
+Header always set Access-Control-Allow-Methods "POST, GET, OPTIONS, DELETE, PUT"
 AddDefaultCharset utf-8
