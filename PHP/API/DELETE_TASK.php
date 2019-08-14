@@ -1,19 +1,19 @@
 <?php
-require_once("db_settings.php");
+  require_once("db_settings.php");
 
-$taskID = $_GET['taskID'];
+  $taskID = $_GET['taskID'];
 
-$table= "tasks";
+  $table= "tasks";
 
-$connection = mysqli_connect($server,$login,$dbPass)
-or die("Impossible to connect");
+  $connection = mysqli_connect($server,$login,$dbPass)
+  or die("Impossible to connect");
 
-mysqli_select_db($connection,$db)
-or die("Database not found.");
+  mysqli_select_db($connection,$db)
+  or die("Database not found.");
 
-$deleteRequest = "DELETE FROM $table WHERE id='$taskID'";
+  $deleteRequest = "DELETE FROM $table WHERE id='$taskID'";
 
-$result = mysqli_query($connection,$deleteRequest);
+  $result = mysqli_query($connection,$deleteRequest);
 
-mysqli_close($connection);
+  mysqli_close($connection);
 ?>

@@ -1,6 +1,6 @@
 <?php
-    $server = "localhost";
-    $login = "root";
-    $dbPass = "";
-    $db="taskswatcher";
+  $server = "localhost";
+  $login = "root";
+  $dbPass = "";
+  $db="taskswatcher";
 ?>
