@@ -2,7 +2,6 @@ import { Component, Inject, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { TasksService } from 'src/app/services/tasks.service';
-import { DatePipe } from '@angular/common';
 import { Task } from 'src/app/model';
 
 @Component({
@@ -13,25 +12,28 @@ import { Task } from 'src/app/model';
 
 export class EditTaskDialog {
 
-  maxTitleLength = 300;
+  // Max length for task's title
+  private maxTitleLength = 300;
 
-  charsLeft: number;
-
-  form = new FormGroup({
+  // Number of remaining characters
+  public charsLeft: number;
+  // Form control for task edition form
+  public form = new FormGroup({
     title: new FormControl('', Validators.required),
     deadline: new FormControl(),
     status: new FormControl()
   });
 
-  minDate = new Date(Date.now());
+  // Min date for Mat Date Picker
+  public minDate = new Date(Date.now());
+  // The task to edit
   @Input() task = this.data.task;
   
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<EditTaskDialog>,
-    private tasksService: TasksService,
-    private datePipe: DatePipe
+    private tasksService: TasksService
   ){ }
 
   ngOnInit(){
@@ -44,9 +46,7 @@ export class EditTaskDialog {
     this.charsLeft = this.maxTitleLength - this.form.value.title.length;
   }
 
-  /**
-   * Update a task
-   */
+  // Update a task
   updateTask(){
     const designation = this.form.value.title;
     const deadline = new Date(this.form.value.deadline);
@@ -60,10 +60,19 @@ export class EditTaskDialog {
     this.tasksService.updateTask(task); 
   }
 
+  /**
+   * Delete the current task
+   * @param task : the task to delete
+   */
   deleteTask(task: Task){
     this.tasksService.deleteTask(task);
   }
 
+  /**
+   * Called for each typed key when task's title edition
+   * Determines the number of remaining characters
+   * @param event 
+   */
   onKey(event: any){
     this.charsLeft = this.maxTitleLength - this.form.value.title.length;
   }

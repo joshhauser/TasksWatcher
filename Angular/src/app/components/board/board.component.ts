@@ -14,15 +14,15 @@ import { EditTaskDialog } from '../dialogs/edit-task-dialog/edit-task-dialog';
 
 export class BoardComponent implements OnInit {
 
-  toDo: Task[] = [];
-  inProgress: Task[] = [];
-  done: Task[] = [];
-  inReview: Task[] = [];
+  public toDo: Task[] = [];
+  public inProgress: Task[] = [];
+  public done: Task[] = [];
+  public inReview: Task[] = [];
 
-  copyOfToDo: Task[] = [];
-  copyOfInProgress: Task[] = [];
-  copyOfDone: Task[] = [];
-  copyOfInReview: Task[] = [];
+  public copyOfToDo: Task[] = [];
+  public copyOfInProgress: Task[] = [];
+  public copyOfDone: Task[] = [];
+  public copyOfInReview: Task[] = [];
 
   constructor(
     private tasksService: TasksService,
@@ -76,6 +76,11 @@ export class BoardComponent implements OnInit {
     });
   }
 
+  /**
+   * Find an element in the given list
+   * @param list : the list in which an element will be searched
+   * @param element : the searched element
+   */
   findInlist(list: any[], element: any){
     let isInList: boolean;
     list.forEach(e => e === element ? isInList = true : isInList = false);
@@ -83,6 +88,11 @@ export class BoardComponent implements OnInit {
     return isInList;
   }
 
+  /**
+   * Delete a task from a list
+   * @param listIndex : The index which links a list and a status (0 to 3)
+   * @param task : the task to delete
+   */
   deleteTask(listIndex: number, task: Task){
     this.tasksService.deleteTask(task);
     let array = this.getArrayByIndex(listIndex, 'original');
@@ -99,38 +109,40 @@ export class BoardComponent implements OnInit {
    * @param event : the event that correspond to the drag&drop
    */
   drop(event: CdkDragDrop<Task[]>) {
+    // Drag & drop in the same list
     if(event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     }
     else{
+      // Drag & drop from a list to another
       transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
 
-      //get indexes of previous list and current list
+      // Get indexes of previous list and current list
       let previousIndex = Number(event.previousContainer._dropListRef.id.charAt(event.previousContainer._dropListRef.id.length -1));
       let currentIndex = Number(event.container._dropListRef.id.charAt(event.container._dropListRef.id.length -1));
 
-      //Get arrays witch correspond to indexes
+      // Get arrays witch correspond to indexes
       let previousArray = this.getArrayByIndex(previousIndex, 'original');
       let previousCopy = this.getArrayByIndex(previousIndex, 'copy');
       let currentArray = this.getArrayByIndex(currentIndex, 'original');
       let currentCopy = this.getArrayByIndex(currentIndex, 'copy');
 
-      //Get the task to update
+      // Get the task to update
       let taskToUpdate = this.compare(currentArray, currentCopy);
 
-      //Update lists
+      // Update lists
       this.updateArrays(previousArray, previousCopy);
       this.updateArrays(currentArray, currentCopy);
 
-      //Update task's status
+      // Update task's status
       this.updateStatus(taskToUpdate, currentIndex);
     }
   }
 
   /**
-   * Return an array which corresponds to index and mode
+   * Return an array which corresponds to an index and a mode
    * @param index : index of the list
-   * @param mode  : original or copy
+   * @param mode  : 'original' or 'copy'
    */
   getArrayByIndex(index, mode){
     if(mode == 'original'){
@@ -190,7 +202,7 @@ export class BoardComponent implements OnInit {
 
   /**
    * Open dialog for task creation
-   * @param listIndex : index
+   * @param listIndex : number which links a list and a status
    */
   createTask(listIndex: number): void {
     const dialogRef = this.dialog.open(CreateTaskDialog, {
@@ -207,6 +219,11 @@ export class BoardComponent implements OnInit {
     });
   }
 
+  /**
+   * Open a dialog for task edition
+   * @param listIndex : number which links a list and a status
+   * @param task : the task to edit
+   */
   editTask(listIndex: number, task: Task): void{
     const dialogRef = this.dialog.open(EditTaskDialog, {
       width: '500px',
@@ -224,6 +241,7 @@ export class BoardComponent implements OnInit {
     });
   }
 
+  // Remove all elements from arrays
   flushArrays(){
     this.toDo.length = 0;
     this.copyOfToDo.length = 0;
@@ -235,7 +253,14 @@ export class BoardComponent implements OnInit {
     this.copyOfInReview.length = 0;
   }
 
-  getColorForDeadline(deadline: any){
+  /**
+   * Get a color that corresponds to the gap between the current day and the deadline of a task
+   * Green: more than 3 days left
+   * Red: 3 days left or less
+   * Black: Deadline has gone
+   * @param deadline : deadline of a task
+   */
+  getColorForDeadline(deadline: Date){
     const currentDate = new Date(Date.now());
     const _deadline = new Date(deadline);
     const time = (_deadline.getTime() - currentDate.getTime())/86400000;
