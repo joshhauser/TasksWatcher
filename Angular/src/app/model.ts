@@ -1,5 +1,3 @@
-import { VirtualTimeScheduler } from 'rxjs';
-
 export class Task{
     id: number;
     designation: string;
@@ -14,6 +12,10 @@ export class Task{
         this.status = status;
     }
 
+    /**
+     * Get status label from index
+     * @param status : the status index
+     */
     static getStatusLabel(status: number): string {
         switch(status){
             case 0:
@@ -33,6 +35,10 @@ export class Task{
         }
     }
 
+    /**
+     * Get status index from label
+     * @param statusLabel : status label
+     */
     static getStatusInt(statusLabel: string): number {
         switch(statusLabel){
             case 'To do':
