@@ -207,7 +207,7 @@ export class BoardComponent implements OnInit {
   createTask(listIndex: number): void {
     const dialogRef = this.dialog.open(CreateTaskDialog, {
       width: '500px',
-      height: '270px',
+      height: '300px',
       data: listIndex
     });
 

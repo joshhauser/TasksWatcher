@@ -23,29 +23,11 @@
   margin-top: 2.5%;
 
   mat-card{
-      width: 85%;
-      margin-left: 1%;
+    width: 90%;
+    margin-left: 1%;
   }
 }
 
-.addTask{
-  margin-left: 5%;
-}
-
-.task{
-  .deadlineContainer{
-      width: 6em;
-      text-align: center;
-      padding-top: 0.25em;
-      padding-bottom: 0.25em;
-      color: white;
-      font-weight: 500;
-      margin-bottom: -2%;
-      margin-left: -2%;
-      border-radius: 3px;
-      font-size: 9pt;
-  }
-}
 
 .task{
   margin-top: 6%;
@@ -54,16 +36,32 @@
   font-size: 11pt;
 
   p{
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      max-width: 25em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 25em;
   }
 
+  .deadlineContainer{
+    width: 6em;
+    text-align: center;
+    padding-top: 0.25em;
+    padding-bottom: 0.25em;
+    color: white;
+    font-weight: 500;
+    margin-bottom: -2%;
+    margin-left: -2%;
+    border-radius: 3px;
+    font-size: 9pt;
+  }
+}
+
+.task:hover{
+  cursor: pointer;
 }
 
 .addTask{
-  margin-top: 5%;
+  margin-top: 6%;
   margin-left: 1%;
 }
 
@@ -78,18 +76,29 @@
 
 @media(max-width: 1000px){
   .column{
-      width: 75%;
+    width: 75%;
+
+    .addTask{
+      margin-top: 4%;
+      margin-left: 0.5%;
+    }
   }
 
   .scroll{
+    margin-top: 3%;
+    height: 60vh;
+    
+    mat-card{
+      width: 92.5%;
+      margin-left: 1%;
       margin-top: 3%;
-      height: 60vh;
-      
-      mat-card{
-          width: 92.5%;
-          margin-left: 1%;
-          margin-top: 3%;
-      }
+    }
   }
-  
+
+  .task{
+    .deadlineContainer{
+      margin-left: -1%;
+      margin-bottom: -1%;
+    }
+  }
 }
