@@ -49,7 +49,7 @@ export class BoardComponent implements OnInit {
         const deadline = _task[2];
         const status = Number(_task[3]);
         let task = new Task(designation, id, deadline, status);
-        task.deadlineColor = this.getColorForDeadline(task.deadline);
+        task.deadlineColor = this.getColorForDeadline(task);
 
         switch(task.status){
           case 0:
@@ -255,21 +255,40 @@ export class BoardComponent implements OnInit {
 
   /**
    * Get a color that corresponds to the gap between the current day and the deadline of a task
-   * Green: more than 3 days left
+   * Blue: more than 3 days left
    * Red: 3 days left or less
    * Black: Deadline has gone
+   * Green: for every deadline AND status = 'Done' or 'In review'
    * @param deadline : deadline of a task
    */
-  getColorForDeadline(deadline: Date){
+  getColorForDeadline(task: Task){
     const currentDate = new Date(Date.now());
-    const _deadline = new Date(deadline);
+    const _deadline = new Date(task.deadline);
     const time = (_deadline.getTime() - currentDate.getTime())/86400000;
 
-    if(time <= 3 && time >= 0)
+   /*  if(time <= 3 && time >= 0)
       return '#f55b45';
     else if(time < 0)
-      return '#2d2d2d';
+      
     else
+      return '#70bb72'; */
+
+    const taskStatusLabel = Task.getStatusLabel(task.status);
+    if(taskStatusLabel == 'To do' || taskStatusLabel == 'In progress'){
+      if(time <= 3 && time >= 0){
+        return '#f55b45';
+      }
+      else if(time < 0){
+        return '#2d2d2d';
+      }
+      else{
+        return '#56a2f7';
+      }
+    }
+    else{
       return '#70bb72';
+    }
+
+    
   }
 }

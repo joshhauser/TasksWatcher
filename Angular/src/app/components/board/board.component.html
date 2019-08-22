@@ -38,6 +38,7 @@
     <div class="scroll">
       <mat-card class="task" *ngFor="let task of done" cdkDrag (click)="editTask(2, task);">
         <p>{{task.designation}}</p>
+        <!-- In DB, a null/empty date is registered as '0000-00-00' -->
         <div class="deadlineContainer" [ngStyle]="{'background-color': task.deadlineColor}" *ngIf="task.deadline != '0000-00-00'">
           <span class="deadline">{{task.deadline}}</span>
         </div>
