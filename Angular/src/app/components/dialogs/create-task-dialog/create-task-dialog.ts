@@ -33,7 +33,8 @@ export class CreateTaskDialog {
   // Create a new task
   addTask(){
     this.newTask.status = this.data;
-    this.newTask.deadline.setDate(this.newTask.deadline.getDate() +1);
+    if(this.newTask.deadline != null && this.newTask.deadline != undefined)
+      this.newTask.deadline.setDate(this.newTask.deadline.getDate() +1);
     this.tasksService.addNewTask(this.newTask);
   }
 

@@ -37,6 +37,10 @@ export class EditTaskDialog {
   ){ }
 
   ngOnInit(){
+    if(this.task.deadline == '0000-00-00'){
+      const currentDate = new Date();
+      this.task.deadline = currentDate.getFullYear() + '-' + currentDate.getMonth() + '-' + currentDate.getDate();
+    }
     const formValues = {
       title: this.task.designation,
       deadline: this.task.deadline,

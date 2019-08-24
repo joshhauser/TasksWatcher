@@ -1,4 +1,10 @@
-<h1 mat-dialog-title>Edit task</h1>
+<div id="popup-header" fxLayout="row">
+  <h1 mat-dialog-title>Edit task</h1>
+  <span fxFlex></span>
+  <button id="delete-button" mat-icon-button aria-label="Delete task" fxLayoutAlign="end" color="warn" [mat-dialog-close]="true" (click)="deleteTask(task);">
+    <mat-icon>delete</mat-icon>
+  </button>
+</div>
 <div id="content" mat-dialog-content>
   <form [formGroup]="form">
     <mat-form-field>
@@ -28,13 +34,13 @@
   </form>
   <br>
 </div>
-<mat-dialog-actions>
-  <button fxLayoutAlign="start" id="delete" mat-raised-button color="warn" [mat-dialog-close]="true" (click)="deleteTask(task);">
+<mat-dialog-actions fxLayoutAlign="end">
+  <!-- <button fxLayoutAlign="start" id="delete" mat-raised-button color="warn" [mat-dialog-close]="true" (click)="deleteTask(task);">
     <mat-icon>delete</mat-icon>
     <span>Delete</span>
   </button>
-  <span fxFlex></span>
-  <div fxLayoutAlign="end">
+  <span fxFlex></span> -->
+  <div>
     <button mat-button mat-dialog-close>Cancel</button>
     <button mat-raised-button [mat-dialog-close]="true" (click)="updateTask();" [disabled]="task.designation == null || task.designation == ''" color="accent" cdkFocusInitial>Save</button>
   </div>
