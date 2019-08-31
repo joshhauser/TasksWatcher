@@ -236,7 +236,7 @@ export class BoardComponent implements OnInit {
     dialogRef.afterClosed().subscribe((res) => {
       if(res != undefined && res != ''){
         this.flushArrays();
-        this.getTasks();   
+        this.getTasks();
       }
     });
   }
@@ -266,13 +266,6 @@ export class BoardComponent implements OnInit {
     const _deadline = new Date(task.deadline);
     const time = (_deadline.getTime() - currentDate.getTime())/86400000;
 
-   /*  if(time <= 3 && time >= 0)
-      return '#f55b45';
-    else if(time < 0)
-      
-    else
-      return '#70bb72'; */
-
     const taskStatusLabel = Task.getStatusLabel(task.status);
     if(taskStatusLabel == 'To do' || taskStatusLabel == 'In progress'){
       if(time <= 3 && time >= 0){
@@ -288,7 +281,5 @@ export class BoardComponent implements OnInit {
     else{
       return '#70bb72';
     }
-
-    
   }
 }

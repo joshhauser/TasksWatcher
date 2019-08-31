@@ -6,7 +6,7 @@
     <div class="scroll">
       <mat-card class="task" *ngFor="let task of toDo" cdkDrag (click)="editTask(0, task);">
         <p>{{task.designation}}</p>
-        <div class="deadlineContainer" [ngStyle]="{'background-color': task.deadlineColor}" *ngIf="task.deadline != '0000-00-00'">
+        <div class="deadlineContainer" [ngStyle]="{'background-color': task.deadlineColor}" *ngIf="task.deadline != '0000-00-00' && task.deadline != null">
           <span class="deadline">{{task.deadline}}</span>
         </div>
       </mat-card>
@@ -22,7 +22,7 @@
     <div class="scroll">
       <mat-card class="task" *ngFor="let task of inProgress" cdkDrag (click)="editTask(1, task);">
         <p>{{task.designation}}</p>
-        <div class="deadlineContainer" [ngStyle]="{'background-color': task.deadlineColor}" *ngIf="task.deadline != '0000-00-00'">
+        <div class="deadlineContainer" [ngStyle]="{'background-color': task.deadlineColor}" *ngIf="task.deadline != '0000-00-00' && task.deadline != null">
           <span class="deadline">{{task.deadline}}</span>
         </div>
       </mat-card>
@@ -39,7 +39,7 @@
       <mat-card class="task" *ngFor="let task of done" cdkDrag (click)="editTask(2, task);">
         <p>{{task.designation}}</p>
         <!-- In DB, a null/empty date is registered as '0000-00-00' -->
-        <div class="deadlineContainer" [ngStyle]="{'background-color': task.deadlineColor}" *ngIf="task.deadline != '0000-00-00'">
+        <div class="deadlineContainer" [ngStyle]="{'background-color': task.deadlineColor}" *ngIf="task.deadline != '0000-00-00' && task.deadline != null">
           <span class="deadline">{{task.deadline}}</span>
         </div>
       </mat-card>
@@ -55,7 +55,7 @@
     <div class="scroll">
       <mat-card class="task" *ngFor="let task of inReview" cdkDrag (click)="editTask(3, task);">
         <p>{{task.designation}}</p>
-        <div class="deadlineContainer" [ngStyle]="{'background-color': task.deadlineColor}" *ngIf="task.deadline != '0000-00-00'">
+        <div class="deadlineContainer" [ngStyle]="{'background-color': task.deadlineColor}" *ngIf="task.deadline != '0000-00-00' && task.deadline != null">
           <span class="deadline">{{task.deadline}}</span>
         </div>
       </mat-card>

@@ -25,7 +25,7 @@ export class EditTaskDialog {
   });
 
   // Min date for Mat Date Picker
-  public minDate = new Date(Date.now());
+  public currentDate = new Date(Date.now());
   // The task to edit
   @Input() task = this.data.task;
   
@@ -38,14 +38,15 @@ export class EditTaskDialog {
 
   ngOnInit(){
     if(this.task.deadline == '0000-00-00'){
-      const currentDate = new Date();
-      this.task.deadline = currentDate.getFullYear() + '-' + currentDate.getMonth() + '-' + currentDate.getDate();
+      this.task.deadline = null;
     }
+
     const formValues = {
       title: this.task.designation,
       deadline: this.task.deadline,
       status: Task.getStatusLabel(this.task.status)
     };
+    
     this.form.setValue(formValues);
     this.charsLeft = this.maxTitleLength - this.form.value.title.length;
   }
@@ -53,11 +54,14 @@ export class EditTaskDialog {
   // Update a task
   updateTask(){
     const designation = this.form.value.title;
-    const deadline = new Date(this.form.value.deadline);
+    const deadline = this.form.value.deadline;
     const status = this.form.value.status;
-    const oldDeadlineDay = this.task.deadline.split('-')[2];
+    let oldDeadlineDay : Date;
 
-    if(deadline.getDate() != oldDeadlineDay)
+    if(this.task.deadline != null)
+      oldDeadlineDay = this.task.deadline.split('-')[2];
+
+    if(deadline != null && deadline.getDate() != oldDeadlineDay)
       deadline.setDate(deadline.getDate() + 1);
 
     let task = new Task(designation, this.task.id, deadline, Task.getStatusInt(status));
