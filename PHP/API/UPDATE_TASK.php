@@ -11,6 +11,8 @@
   mysqli_select_db($connection, $db)
   or die('Databse not found.');
 
+  mysqli_set_charset($connection,"utf8");
+  
   $id = $datas->data->id;
   $designation = $datas->data->designation;
   $deadline = $datas->data->deadline;

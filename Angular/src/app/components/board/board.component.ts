@@ -267,7 +267,7 @@ export class BoardComponent implements OnInit {
     const time = (_deadline.getTime() - currentDate.getTime())/86400000;
 
     const taskStatusLabel = Task.getStatusLabel(task.status);
-    if(taskStatusLabel == 'To do' || taskStatusLabel == 'In progress'){
+    if(taskStatusLabel != "Done"){
       if(time <= 3 && time >= 0){
         return '#f55b45';
       }
