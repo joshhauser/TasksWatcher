@@ -1,0 +1,8 @@
++ @angular/compiler@7.2.15
+updated 1 package and audited 43247 packages in 12.658s
+
+11 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+
